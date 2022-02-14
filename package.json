@@ -1,0 +1,9 @@
+{
+  "name": "react-ts-template",
+  "version": "1.0.0",
+  "description": "react typescript webpack starter with linting and style setup",
+  "main": "index.js",
+  "author": "pHoeniX-svg",
+  "license": "MIT",
+  "private": true
+}
