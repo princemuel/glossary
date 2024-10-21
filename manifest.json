@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Glossary",
+  "short_name": "glossary",
+  "description": "",
+  "id": "/",
+  "orientation": "natural",
+  "display_override": ["window-controls-overlay", "fullscreen", "minimal-ui"],
+  "background_color": "#1b1b1f",
+  "theme_color": "#10b981",
+  "categories": [],
+  "handle_links": "auto",
+  "launch_handler": { "client_mode": "navigate-existing" },
+  "edge_side_panel": { "preferred_width": 320 }
+}
