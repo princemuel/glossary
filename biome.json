@@ -3,25 +3,13 @@
   "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
-    "rules": {
-      "recommended": true,
-      "nursery": {
-        "useSortedClasses": {
-          "level": "warn",
-          "fix": "safe",
-          "options": {
-            "attributes": ["classList", "tw"],
-            "functions": ["tw", "cn", "tv"]
-          }
-        }
-      }
-    },
-    "ignore": ["node_modules", ".vercel", ".vscode", ".astro"]
+    "rules": { "recommended": true },
+    "ignore": ["node_modules", "dist", ".vscode", ".astro"]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "ignore": ["node_modules", ".vercel", ".vscode", ".astro"]
+    "ignore": ["node_modules", "dist", ".vscode", ".astro"]
   },
   "overrides": [
     {
