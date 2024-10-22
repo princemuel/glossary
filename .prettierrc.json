@@ -12,13 +12,13 @@
   "quoteProps": "as-needed",
   "experimentalTernaries": false,
 
-  "plugins": ["prettier-plugin-astro"],
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-astro"],
   "overrides": [
     {
       "files": "*.astro",
       "options": {
         "parser": "astro",
-        "astroAllowShorthand": false,
+        "astroAllowShorthand": true,
         "astroSkipFrontmatter": true
       }
     }
