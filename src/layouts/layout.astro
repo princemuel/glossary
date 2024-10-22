@@ -1,0 +1,29 @@
+---
+import "@/assets/styles/globals.css";
+import Indicator from "@/components/indicator.astro";
+import "@fontsource-variable/inconsolata";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/lora";
+---
+
+<html lang="en" data-theme="dark" data-font="mono">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Glossary</title>
+  </head>
+  <body
+    class:list={[
+      "relative font-normal antialiased",
+      "bg-white text-grey-900 dark:bg-grey-900 dark:text-white",
+      "sans:font-sans mono:font-mono serif:font-serif",
+    ]}
+  >
+    <Fragment>
+      <slot />
+      <Indicator />
+    </Fragment>
+  </body>
+</html>
