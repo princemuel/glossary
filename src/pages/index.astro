@@ -1,0 +1,145 @@
+---
+import Container from "@/components/container.astro";
+import Link from "@/components/link.astro";
+import { merge } from "@/helpers/merge";
+import { hasValues } from "@/helpers/utils";
+import Layout from "@/layouts/layout.astro";
+import { schema } from "@/schema/schema";
+import { DB_URL } from "astro:env/server";
+
+// const regex = searchTerm ? new RegExp(escape_regex(searchTerm), "gui") : null;
+
+// const allEntries = await getCollection("films", ({ data }) => {
+//   return regex ? regex.test(data.title) : true;
+// });
+
+const url = new URL("en/keyboard", DB_URL);
+
+const response = await fetch(url)
+  .then((r) => r.json())
+  .then((r) => {
+    return "message" in r
+      ? { status: "error", error: r }
+      : { status: "success", data: merge(r) };
+  });
+
+const result = schema.parse(response);
+
+const data = result.status === "success" ? result.data : null;
+const error = result.status === "error" ? result.error : null;
+const phonetics = data?.phonetics?.[0];
+---
+
+<Layout>
+  <Container>
+    {
+      error ? (
+        <section
+          aria-labelledby="error"
+          class="grid min-h-[70vh] place-content-center"
+        >
+          <div class="flex flex-col gap-8 text-center">
+            <span role="img" aria-label="frown emoji" class="text-6xl">
+              🙁
+            </span>
+            <h1 id="error" class="">
+              {error.title}
+            </h1>
+            <p class="">
+              {error.message}&nbsp;{error.resolution}
+            </p>
+          </div>
+        </section>
+      ) : null
+    }
+
+    {
+      data ? (
+        <section aria-labelledby="heading" class="">
+          <header class="flex items-center justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 id="heading" class="text-6xl font-bold">
+                {data.word}
+              </h1>
+              <p class="">{phonetics?.text}</p>
+            </div>
+            <figure class="">
+              <figcaption class="sr-only">Listen to the word:</figcaption>
+              <audio data-id="audio" preload="metadata" class="">
+                <source src={phonetics?.audio} type="audio/mpeg" />
+                Your browser does not support audio.
+              </audio>
+              <button type="button" data-id="play-pause" class="">
+                <span class="sr-only">Play audio</span>
+              </button>
+            </figure>
+          </header>
+
+          {hasValues(data.meanings)
+            ? data.meanings.map((meaning) => (
+                <section aria-labelledby={meaning.partOfSpeech}>
+                  <h2 id={meaning.partOfSpeech}>{meaning.partOfSpeech}</h2>
+
+                  <dl>
+                    <dt>Meaning</dt>
+                    {hasValues(meaning.definitions) ? (
+                      <dd>
+                        <ul>
+                          {meaning.definitions.map((d) => (
+                            <Fragment>
+                              <li>
+                                <p>{d.definition}</p>
+                                {d.example && <q>{d.example}</q>}
+                              </li>
+                            </Fragment>
+                          ))}
+                        </ul>
+                      </dd>
+                    ) : null}
+                  </dl>
+
+                  <dl>
+                    <dt>Synonyms</dt>
+                    {hasValues(meaning.synonyms) ? (
+                      <dd>
+                        <ul>
+                          {meaning.synonyms.map((synonym) => (
+                            <Fragment>
+                              <li>{synonym}</li>
+                            </Fragment>
+                          ))}
+                        </ul>
+                      </dd>
+                    ) : null}
+                  </dl>
+
+                  <dl>
+                    <dt>Antonyms</dt>
+
+                    {hasValues(meaning.antonyms) ? (
+                      <dd>
+                        <ul>
+                          {meaning.antonyms.map((antonym) => (
+                            <Fragment>
+                              <li>{antonym}</li>
+                            </Fragment>
+                          ))}
+                        </ul>
+                      </dd>
+                    ) : null}
+                  </dl>
+                </section>
+              ))
+            : null}
+
+          <footer>
+            <h2>Source</h2>
+            {hasValues(data.sourceUrls) ? (
+              <Link href={data.sourceUrls[0]}>{data.sourceUrls[0]}</Link>
+            ) : null}
+          </footer>
+        </section>
+      ) : null
+    }
+  </Container>
+</Layout>
