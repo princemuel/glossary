@@ -1,12 +1,13 @@
 ---
 import "@/assets/styles/globals.css";
+import Attribution from "@/components/attribution.astro";
 import Indicator from "@/components/indicator.astro";
 import "@fontsource-variable/inconsolata";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/lora";
 ---
 
-<html lang="en" data-theme="dark" data-font="mono">
+<html lang="en" data-theme="dark" data-font="serif">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -21,9 +22,10 @@ import "@fontsource-variable/lora";
       "sans:font-sans mono:font-mono serif:font-serif",
     ]}
   >
-    <Fragment>
+    <div class="mt-20 flex flex-col gap-16">
       <slot />
       <Indicator />
-    </Fragment>
+      <Attribution />
+    </div>
   </body>
 </html>

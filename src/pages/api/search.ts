@@ -1,9 +1,9 @@
+import { DB_URL } from "astro:env/server";
 import { parseError } from "@/helpers/error";
 import { merge } from "@/helpers/merge";
 import { escape_regex } from "@/helpers/utils";
 import { regex } from "@/lib/regex";
 import type { APIRoute } from "astro";
-import { DB_URL } from "astro:env/server";
 
 export const prerender = false;
 

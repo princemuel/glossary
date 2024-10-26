@@ -1,5 +1,5 @@
-import { regex } from "@/lib/regex";
 import { z } from "astro:schema";
+import { regex } from "@/lib/regex";
 
 const successSchema = z.object({
   word: z.string().default(""),
