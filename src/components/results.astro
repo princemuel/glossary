@@ -1,0 +1,110 @@
+---
+import { hasValues } from "@/helpers/utils";
+import type { Result } from "@/schema/schema";
+import { Icon } from "astro-icon/components";
+import AudioPlayer from "./audio-player.astro";
+import Link from "./link.astro";
+import WordRelations from "./word-relations.astro";
+
+type Props = { data: NonNullable<Result["data"]> };
+
+const { data } = Astro.props;
+
+const phonetics = data.phonetics[0];
+---
+
+<Fragment>
+  <header class="flex items-center justify-between">
+    <div class="flex flex-col gap-2">
+      <h1 id="heading" class="text-3xl font-bold lg:text-6xl">
+        {data.word}
+      </h1>
+      <p class="text-2xl tracking-tighter text-accent-200">
+        {data.phonetic || phonetics?.text}
+      </p>
+    </div>
+    <AudioPlayer src={phonetics?.audio} />
+  </header>
+
+  {
+    hasValues(data.meanings)
+      ? data.meanings.map((meaning) => (
+          <section
+            aria-labelledby={meaning.partOfSpeech}
+            class="flex flex-col gap-8"
+          >
+            <h2
+              id={meaning.partOfSpeech}
+              class:list={[
+                "flex items-center gap-6",
+                "text-lg font-bold italic text-grey-700 dark:text-white",
+              ]}
+            >
+              <span>{meaning.partOfSpeech}</span>
+              <span class="h-px flex-1 bg-grey-200 dark:bg-grey-600" />
+            </h2>
+
+            {hasValues(meaning.definitions) ? (
+              <dl class="flex flex-col gap-5">
+                <dt class="text-xl text-grey-400">Meaning</dt>
+                <dd>
+                  <ul
+                    class:list={[
+                      "flex flex-col gap-3",
+                      "list-disc pl-6 marker:text-accent-200",
+                      "text-sm text-grey-700 dark:text-white",
+                    ]}
+                  >
+                    {meaning.definitions.map((d) => (
+                      <Fragment>
+                        <li class="space-y-3 pl-2">
+                          <p>{d.definition}</p>
+                          {d.example && (
+                            <q class="block text-grey-400">{d.example}</q>
+                          )}
+                        </li>
+                      </Fragment>
+                    ))}
+                  </ul>
+                </dd>
+              </dl>
+            ) : null}
+
+            {hasValues(meaning.synonyms) ? (
+              <WordRelations title="Synonyms" values={meaning.synonyms} />
+            ) : null}
+
+            {hasValues(meaning.antonyms) ? (
+              <WordRelations title="Antonyms" values={meaning.antonyms} />
+            ) : null}
+          </section>
+        ))
+      : null
+  }
+
+  <footer class="flex flex-col gap-4">
+    <hr class="h-px border-grey-200 dark:border-grey-600" />
+    <div
+      class="flex flex-col items-center text-[0.625rem] leading-4 2xs:text-sm"
+    >
+      <h2 class="text-grey-400">Source</h2>
+      <div class="flex flex-col gap-2">
+        {
+          hasValues(data.sourceUrls)
+            ? data.sourceUrls.map((url) => (
+                <Link
+                  href={url}
+                  class="group flex items-center gap-2 text-grey-700 dark:text-white"
+                >
+                  <span class="group-hover:underline group-focus:underline">
+                    {url}
+                  </span>
+                  <Icon name="new-window" class="" />
+                </Link>
+              ))
+            : null
+        }
+      </div>
+    </div>
+  </footer>
+</Fragment>

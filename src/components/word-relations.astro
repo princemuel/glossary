@@ -1,0 +1,14 @@
+---
+type Props = { values: string[]; title: string };
+
+const { values, title } = Astro.props;
+---
+
+<dl class="flex items-center gap-4">
+  <dt class="text-xl text-grey-400">{title}</dt>
+  <dd>
+    <ul class="flex items-center gap-2 text-lg font-bold text-accent-200">
+      {values.map((value) => <li>{value}</li>)}
+    </ul>
+  </dd>
+</dl>

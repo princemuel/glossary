@@ -3,6 +3,8 @@ import icon from "astro-icon";
 import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 
+import vercel from "@astrojs/vercel/serverless";
+
 const manifest = (() => {
   type ManifestPromise = Promise<PwaOptions["manifest"]>;
   try {
@@ -28,14 +30,14 @@ type Environment = NonNullable<
   ReturnType<typeof import("astro/config")["defineConfig"]>["experimental"]
 >["env"];
 
-const z = envField;
+const f = envField;
 
 const environment: Environment = {
   validateSecrets: true,
   schema: {
-    PUBLIC_URL: z.string({ context: "client", access: "public", url: true }),
-    DB_URL: z.string({ context: "server", access: "secret", url: true }),
-    ASTRO_KEY: z.string({ context: "server", access: "secret" }),
+    PUBLIC_URL: f.string({ context: "client", access: "public", url: true }),
+    DB_URL: f.string({ context: "server", access: "secret", url: true }),
+    ASTRO_KEY: f.string({ context: "server", access: "secret" }),
   },
 };
 
@@ -44,7 +46,7 @@ const envVars = loadEnv(mode, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [icon({ iconDir: "src/assets/icons" }), pwa(PWAOptions)],
+  output: "hybrid",
   site: envVars.PUBLIC_URL,
   experimental: {
     globalRoutePriority: true,
@@ -56,4 +58,17 @@ export default defineConfig({
     env: environment,
   },
   security: { checkOrigin: true },
+  integrations: [
+    icon({
+      iconDir: "src/assets/icons",
+      include: { mdi: ["play", "pause"], logos: ["astro-icon"] },
+    }),
+    pwa(PWAOptions),
+  ],
+  adapter: vercel({
+    imageService: true,
+    webAnalytics: {
+      enabled: envVars.NODE_ENV === "production",
+    },
+  }),
 });

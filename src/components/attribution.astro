@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components";
+import Container from "./container.astro";
+import Link from "./link.astro";
+
+const formatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+});
+const buildDate = new Date(Date.now());
+---
+
+<footer
+  class="fixed bottom-0 w-full bg-gray-200 text-xs text-gray-800 dark:bg-gray-900 dark:text-white"
+>
+  <Container class="flex items-center justify-center py-1">
+    <p class="flex flex-wrap content-center items-center gap-1">
+      <span>Built with&nbsp;</span>
+      <Icon name="logos:astro-icon" />
+      <Link href="https://docs.astro.build/en/concepts/why-astro/">
+        {Astro.generator}
+      </Link>&nbsp;on&nbsp;
+      <time datetime={buildDate.toISOString()}
+        >{formatter.format(buildDate)}</time
+      >
+    </p>
+  </Container>
+</footer>

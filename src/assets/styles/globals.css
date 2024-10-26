@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:is(a, button, label, option) {
+  @apply cursor-pointer;
+}
