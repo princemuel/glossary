@@ -12,7 +12,10 @@
   "quoteProps": "as-needed",
   "experimentalTernaries": false,
 
-  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-astro"],
+  "tailwindConfig": "tailwind.config.js",
+  "tailwindFunctions": ["tw", "cn", "tv"],
+  "tailwindAttributes": ["tw", "class:list"],
+  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
   "overrides": [
     {
       "files": "*.astro",
