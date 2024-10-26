@@ -1,46 +1,61 @@
+import { regex } from "@/lib/regex";
 import { z } from "astro:schema";
 
 const successSchema = z.object({
-  word: z.string(),
+  word: z.string().default(""),
   phonetic: z.string().default(""),
   phonetics: z.array(
     z.object({
-      text: z.string(),
-      audio: z.string(),
+      text: z.string().default(""),
+      audio: z.string().default(""),
       sourceUrl: z.string().default(""),
       license: z
-        .object({ name: z.string(), url: z.string() })
+        .object({ name: z.string().default(""), url: z.string().default("") })
         .default({ name: "", url: "" }),
     }),
   ),
   meanings: z.array(
     z.object({
-      partOfSpeech: z.string(),
+      partOfSpeech: z.string().default(""),
       definitions: z.array(
         z.object({
-          definition: z.string(),
-          synonyms: z.array(z.string()),
-          antonyms: z.array(z.string()),
+          definition: z.string().default(""),
+          synonyms: z.array(z.string().default("")),
+          antonyms: z.array(z.string().default("")),
           example: z.string().default(""),
         }),
       ),
-      synonyms: z.array(z.string()),
-      antonyms: z.array(z.string()),
+      synonyms: z.array(z.string().default("")),
+      antonyms: z.array(z.string().default("")),
     }),
   ),
   license: z
-    .object({ name: z.string(), url: z.string() })
+    .object({ name: z.string().default(""), url: z.string().default("") })
     .default({ name: "", url: "" }),
-  sourceUrls: z.array(z.string()),
+  sourceUrls: z.array(z.string().default("")),
 });
 
 const errorSchema = z.object({
-  title: z.string(),
-  message: z.string(),
-  resolution: z.string(),
+  title: z.string().default(""),
+  message: z.string().default(""),
+  resolution: z.string().default(""),
 });
 
-export const schema = z.discriminatedUnion("status", [
-  z.object({ status: z.literal("success"), data: successSchema }),
-  z.object({ status: z.literal("error"), error: errorSchema }),
-]);
+export const searchSchema = z.object({
+  query: z
+    .string()
+    .min(1, { message: "Whoop's, can't be empty" })
+    .trim()
+    .regex(regex, {
+      message: "Please enter a valid word with only letters",
+    })
+    .default(""),
+});
+
+export const schema = z.object({
+  ok: z.boolean(),
+  data: z.nullable(successSchema),
+  error: z.nullable(errorSchema),
+});
+
+export type Result = z.infer<typeof schema>;
