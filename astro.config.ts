@@ -59,7 +59,10 @@ export default defineConfig({
   },
   security: { checkOrigin: true },
   integrations: [
-    icon({ iconDir: "src/assets/icons", include: {} }),
+    icon({
+      iconDir: "src/assets/icons",
+      include: { mdi: ["play", "pause"], logos: ["astro-icon"] },
+    }),
     pwa(PWAOptions),
   ],
   adapter: vercel({
