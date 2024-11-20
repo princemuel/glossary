@@ -1,11 +1,10 @@
 import { parseError } from "@/helpers/error";
 import { merge } from "@/helpers/merge";
 import { escape_regex } from "@/helpers/utils";
-import type { APIRoute } from "astro";
+
 import { DB_URL } from "astro:env/server";
 
-export const prerender = false;
-
+import type { APIRoute } from "astro";
 type ResponseErr = {
   title: string;
   message: string;

@@ -46,7 +46,7 @@ const envVars = loadEnv(mode, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
+  output: "server",
   site: envVars.PUBLIC_URL,
   experimental: {
     globalRoutePriority: true,
