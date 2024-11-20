@@ -1,9 +1,8 @@
 ---
-import { Icon } from 'astro-icon/components';
-import type { HTMLAttributes } from 'astro/types';
-import Container from './container.astro';
-import Link from './link.astro';
-
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import Container from "./container.astro";
+import Link from "./link.astro";
 
 const formatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
@@ -14,8 +13,8 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 });
 const buildDate = new Date(Date.now());
 
-type Props = HTMLAttributes<'footer'>;
-const { class: className, ...rest} = Astro.props;
+type Props = HTMLAttributes<"footer">;
+const { class: className, ...rest } = Astro.props;
 ---
 
 <footer
