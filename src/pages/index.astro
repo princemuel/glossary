@@ -5,37 +5,37 @@ import Fallback from "@/components/fallback.astro";
 import Results from "@/components/results.astro";
 import SearchForm from "@/components/search-form.astro";
 import Layout from "@/layouts/layout.astro";
-import { handleSearch } from "@/lib/search";
+import { defaultQuery, searchParam } from "@/lib/constants";
+import { search } from "@/lib/search";
 import { type Result, schema, searchSchema } from "@/schema/schema";
 
 export const prerender = false;
 
-let searchResult = {} as Result;
-let errorMessage = "";
-let searchTerm: string | null = null;
-const defaultWord = "h";
+let payload = {} as Result;
+let error = "";
+let query: string | null = null;
 let loading = false;
 
 try {
   loading = true;
 
-  if (Astro.url.searchParams.has("query")) {
-    searchTerm = Astro.url.searchParams.get("query");
+  if (Astro.url.searchParams.has(searchParam)) {
+    query = Astro.url.searchParams.get(searchParam);
 
-    const result = searchSchema.safeParse({ query: searchTerm });
+    const result = searchSchema.safeParse({ query });
     if (!result.success) {
       const errors = result.error.flatten();
-      errorMessage = errors.fieldErrors.query?.[0] || "Unknown Error";
+      error = errors.fieldErrors.query?.[0] || "Unknown Error";
     } else {
-      const response = await handleSearch(result.data.query);
-      searchResult = schema.parse(response);
+      const response = await search(result.data.query);
+      payload = schema.parse(response);
     }
   } else {
-    const response = await handleSearch(defaultWord);
-    searchResult = schema.parse(response);
+    const response = await search(defaultQuery);
+    payload = schema.parse(response);
   }
-} catch (error) {
-  errorMessage = "Network error. Please try again.";
+} catch {
+  error = "Network error. Please try again.";
 } finally {
   loading = false;
 }
@@ -45,26 +45,26 @@ try {
   <main aria-labelledby="heading error">
     <Container class="flex flex-col gap-8">
       <section aria-label="SEARCH FOR A WORD">
-        <SearchForm {searchTerm} error={errorMessage} />
+        <SearchForm searchTerm={query} {error} />
       </section>
 
       {loading && <Fallback />}
 
       {
-        !loading && searchResult.error ? (
+        payload.error ? (
           <section
             aria-labelledby="error"
-            class="grid min-h-[70vh] place-content-center"
+            class="grid min-h-[40vh] place-content-center"
           >
-            <ErrorBoundary error={searchResult.error} />
+            <ErrorBoundary error={payload.error} />
           </section>
         ) : null
       }
 
       {
-        !loading && searchResult.data ? (
+        payload.data ? (
           <section aria-labelledby="heading" class="flex flex-col gap-8">
-            <Results data={searchResult.data} />
+            <Results data={payload.data} />
           </section>
         ) : null
       }

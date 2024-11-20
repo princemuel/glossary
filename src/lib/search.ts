@@ -1,7 +1,6 @@
-export async function handleSearch(query: string) {
+export const search = async (query: string) => {
   const response = await fetch(
     new URL(`/api/search?query=${query}`, import.meta.env.SITE),
   );
-  if (!response.ok) return response.json();
-  return response.json();
-}
+  return !response.ok ? response.json() : response.json();
+};

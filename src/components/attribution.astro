@@ -1,7 +1,9 @@
 ---
-import { Icon } from "astro-icon/components";
-import Container from "./container.astro";
-import Link from "./link.astro";
+import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
+import Container from './container.astro';
+import Link from './link.astro';
+
 
 const formatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
@@ -11,13 +13,17 @@ const formatter = new Intl.DateTimeFormat("en-US", {
   minute: "numeric",
 });
 const buildDate = new Date(Date.now());
+
+type Props = HTMLAttributes<'footer'>;
+const { class: className, ...rest} = Astro.props;
 ---
 
 <footer
-  class="fixed bottom-0 w-full bg-gray-200 text-xs text-gray-800 dark:bg-gray-900 dark:text-white"
+  class="mt-20 bg-gray-200 text-gray-800 dark:bg-gray-900 dark:text-white"
+  {...rest}
 >
   <Container class="flex items-center justify-center py-1">
-    <p class="flex flex-wrap content-center items-center gap-1">
+    <p class="flex flex-wrap content-center items-center gap-1 text-xs">
       <span>Built with&nbsp;</span>
       <Icon name="logos:astro-icon" />
       <Link href="https://docs.astro.build/en/concepts/why-astro/">

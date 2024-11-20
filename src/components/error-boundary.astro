@@ -8,8 +8,10 @@ const { error } = Astro.props;
 
 <div class="flex flex-col gap-8 text-center">
   <span role="img" aria-label="frown emoji" class="text-6xl"> 🙁 </span>
-  <h1 id="error">{error.title}</h1>
-  <p>
+  <h1 id="error" class="text-xl font-bold text-grey-700 dark:text-white">
+    {error.title}
+  </h1>
+  <p class="text-lg text-grey-400">
     {error.message}&nbsp;{error.resolution}
   </p>
 </div>

@@ -1,9 +1,8 @@
-import { DB_URL } from "astro:env/server";
 import { parseError } from "@/helpers/error";
 import { merge } from "@/helpers/merge";
 import { escape_regex } from "@/helpers/utils";
-import { regex } from "@/lib/regex";
 import type { APIRoute } from "astro";
+import { DB_URL } from "astro:env/server";
 
 export const prerender = false;
 
@@ -19,7 +18,7 @@ export const GET: APIRoute = async ({ request }) => {
   let query = (url.searchParams.get("query") ?? "").trim();
   query = escape_regex(query).trim();
 
-  if (!query || !regex.test(query)) throw new Error("Whoops, can't be empty");
+  if (!query) throw new Error("Whoops, can't be empty");
 
   try {
     const response = await fetch(new URL(`en/${query}`, DB_URL));

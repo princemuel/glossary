@@ -1,14 +1,31 @@
 ---
+import Link from './link.astro';
+
 type Props = { values: string[]; title: string };
 
 const { values, title } = Astro.props;
 ---
 
-<dl class="flex items-center gap-4">
+<dl class="flex items-start gap-4">
   <dt class="text-xl text-grey-400">{title}</dt>
   <dd>
-    <ul class="flex items-center gap-2 text-lg font-bold text-accent-200">
-      {values.map((value) => <li>{value}</li>)}
+    <ul
+      class="flex flex-wrap items-center gap-2 text-lg font-bold text-accent-200"
+    >
+      {
+        values.map((value) => (
+          <li>
+            <Link
+              href={
+                new URL(encodeURI(`https://en.wiktionary.org/wiki/${value}`))
+              }
+              class="hocus:underline"
+            >
+              {value}
+            </Link>
+          </li>
+        ))
+      }
     </ul>
   </dd>
 </dl>

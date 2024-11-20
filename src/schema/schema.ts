@@ -1,5 +1,4 @@
 import { z } from "astro:schema";
-import { regex } from "@/lib/regex";
 
 const successSchema = z.object({
   word: z.string().default(""),
@@ -46,9 +45,6 @@ export const searchSchema = z.object({
     .string()
     .min(1, { message: "Whoop's, can't be empty" })
     .trim()
-    .regex(regex, {
-      message: "Please enter a valid word with only letters",
-    })
     .default(""),
 });
 
