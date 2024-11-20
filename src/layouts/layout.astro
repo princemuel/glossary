@@ -1,0 +1,32 @@
+---
+import "@/assets/styles/globals.css";
+import Attribution from "@/components/attribution.astro";
+import Header from "@/components/header.astro";
+import "@fontsource-variable/inconsolata";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/lora";
+import { ViewTransitions } from "astro:transitions";
+---
+
+<html lang="en" data-theme="light" data-font="serif">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Glossary</title>
+    <ViewTransitions />
+  </head>
+  <body
+    class:list={[
+      "relative font-normal antialiased",
+      "bg-white text-grey-900 dark:bg-grey-900 dark:text-white",
+      "sans:font-sans mono:font-mono serif:font-serif",
+      "grid min-h-screen grid-rows-[auto_1fr_auto] supports-[min-height:100svh]:min-h-svh",
+    ]}
+  >
+    <Header />
+    <slot />
+    <Attribution class="mt-20" />
+  </body>
+</html>

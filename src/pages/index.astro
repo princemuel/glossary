@@ -1,0 +1,73 @@
+---
+import Container from "@/components/container.astro";
+import ErrorBoundary from "@/components/error-boundary.astro";
+import Fallback from "@/components/fallback.astro";
+import Results from "@/components/results.astro";
+import SearchForm from "@/components/search-form.astro";
+import Layout from "@/layouts/layout.astro";
+import { defaultQuery, searchParam } from "@/lib/constants";
+import { search } from "@/lib/search";
+import { type Result, schema, searchSchema } from "@/schema/schema";
+
+export const prerender = false;
+
+let payload = {} as Result;
+let error = "";
+let query: string | null = null;
+let loading = false;
+
+try {
+  loading = true;
+
+  if (Astro.url.searchParams.has(searchParam)) {
+    query = Astro.url.searchParams.get(searchParam);
+
+    const result = searchSchema.safeParse({ query });
+    if (!result.success) {
+      const errors = result.error.flatten();
+      error = errors.fieldErrors.query?.[0] || "Unknown Error";
+    } else {
+      const response = await search(result.data.query);
+      payload = schema.parse(response);
+    }
+  } else {
+    const response = await search(defaultQuery);
+    payload = schema.parse(response);
+  }
+} catch {
+  error = "Network error. Please try again.";
+} finally {
+  loading = false;
+}
+---
+
+<Layout>
+  <main aria-labelledby="heading error">
+    <Container class="flex flex-col gap-8">
+      <section aria-label="SEARCH FOR A WORD">
+        <SearchForm searchTerm={query} {error} />
+      </section>
+
+      {loading && <Fallback />}
+
+      {
+        payload.error ? (
+          <section
+            aria-labelledby="error"
+            class="grid min-h-[40vh] place-content-center"
+          >
+            <ErrorBoundary error={payload.error} />
+          </section>
+        ) : null
+      }
+
+      {
+        payload.data ? (
+          <section aria-labelledby="heading" class="flex flex-col gap-8">
+            <Results data={payload.data} />
+          </section>
+        ) : null
+      }
+    </Container>
+  </main>
+</Layout>
