@@ -37,7 +37,7 @@
     "@vite-pwa/assets-generator": "^0.2.6",
     "@vite-pwa/astro": "^0.4.3",
     "@vite-pwa/workbox-window": "^8.0.0",
-    "astro": "^4.16.13",
+    "astro": "^4.16.17",
     "astro-icon": "^1.1.1",
     "autoprefixer": "^10.4.20",
     "lefthook": "^1.8.1",
