@@ -5,11 +5,12 @@ import Fallback from "@/components/fallback.astro";
 import Results from "@/components/results.astro";
 import SearchForm from "@/components/search-form.astro";
 import Layout from "@/layouts/layout.astro";
+
 import { defaultQuery, searchParam } from "@/lib/constants";
 import { search } from "@/lib/search";
-import { type Result, schema, searchSchema } from "@/schema/schema";
+import { schema, searchSchema } from "@/schema/schema";
 
-export const prerender = false;
+import type { Result } from "@/schema/schema";
 
 let payload = {} as Result;
 let error = "";
@@ -24,14 +25,17 @@ try {
 
     const result = searchSchema.safeParse({ query });
     if (!result.success) {
+      query = "";
       const errors = result.error.flatten();
       error = errors.fieldErrors.query?.[0] || "Unknown Error";
     } else {
-      const response = await search(result.data.query);
+      query = result.data.query;
+      const response = await search(query);
       payload = schema.parse(response);
     }
   } else {
-    const response = await search(defaultQuery);
+    query = defaultQuery;
+    const response = await search(query);
     payload = schema.parse(response);
   }
 } catch {
@@ -39,9 +43,25 @@ try {
 } finally {
   loading = false;
 }
+
+const htmlTitle = query
+  ? `${query}: Meaning, Synonyms, and More | Glossary`
+  : "Glossary";
+
+const description = query
+  ? `Discover the meaning of '${query}' including synonyms, antonyms, and usage examples in English. Search more words instantly on Glossary.`
+  : "Glossary is the ultimate free dictionary app, perfect for language learners and students! Search and discover word meanings, definitions, synonyms, and usage examples instantly. Use our dictionary app for quick word lookup and vocabulary building.";
+
+console.log(JSON.stringify(payload.data));
 ---
 
 <Layout>
+  <Fragment slot="head">
+    <title>{htmlTitle}</title>
+    <meta name="title" content={htmlTitle} />
+    <meta name="description" content={description} />
+  </Fragment>
+
   <main aria-labelledby="heading error">
     <Container class="flex flex-col gap-8">
       <section aria-label="SEARCH FOR A WORD">
