@@ -1,28 +1,16 @@
 {
-  "printWidth": 80,
-  "tabWidth": 2,
-  "useTabs": false,
+  "printWidth": 84,
   "semi": true,
   "singleQuote": false,
-  "jsxSingleQuote": false,
-  "bracketSpacing": true,
-  "bracketSameLine": false,
+  "tabWidth": 2,
   "trailingComma": "all",
-  "arrowParens": "always",
-  "quoteProps": "as-needed",
-  "experimentalTernaries": false,
-
-  "tailwindConfig": "tailwind.config.js",
-  "tailwindFunctions": ["tw", "cn", "tv"],
-  "tailwindAttributes": ["tw", "class:list"],
-  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+  "useTabs": false,
+  "plugins": ["prettier-plugin-tailwindcss"],
   "overrides": [
     {
-      "files": "*.astro",
+      "files": [".*", "*.json", "*.md", "*.mdx", "*.toml", "*.yml"],
       "options": {
-        "parser": "astro",
-        "astroAllowShorthand": true,
-        "astroSkipFrontmatter": true
+        "useTabs": false
       }
     }
   ]

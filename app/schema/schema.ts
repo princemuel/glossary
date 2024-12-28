@@ -1,4 +1,4 @@
-import { z } from "astro:schema";
+import { z } from "zod";
 
 const successSchema = z.object({
   word: z.string().default(""),

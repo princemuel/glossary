@@ -121,6 +121,9 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
+# React Router build output
+.react-router
+
 # Next.js build output
 .next
 /.next/
@@ -194,6 +197,9 @@ tmp-*
 
 *.pem
 *.ignored.*
+*.ignored
+*.local.*
+*.local
 
 styled-system
 prisma.rs
