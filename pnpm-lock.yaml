@@ -32,13 +32,13 @@ importers:
         version: 19.8.0
       '@fontsource-variable/inconsolata':
         specifier: ^5.1.0
-        version: 5.1.1
+        version: 5.2.5
       '@fontsource-variable/inter':
         specifier: ^5.1.0
-        version: 5.1.1
+        version: 5.2.5
       '@fontsource-variable/lora':
         specifier: ^5.1.0
-        version: 5.1.1
+        version: 5.2.5
       '@iconify-json/logos':
         specifier: ^1.2.3
         version: 1.2.4
@@ -981,14 +981,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource-variable/inconsolata@5.1.1':
-    resolution: {integrity: sha512-zwPcyf5/9sw0xO4hKPhdmMPBmx7zYzRGjHsdh0U2Mxf44pYdCoxZgbPw4JNIUCbMnMY8u2tE6W+6kv1cHiRO4g==}
+  '@fontsource-variable/inconsolata@5.2.5':
+    resolution: {integrity: sha512-CqYyjFNuArFv+cLRQodR+A9jJm2UMnBoP29yjYqjkd7Cgwz3pnMs3p68kmUb6VD/UqpDQR3deYTwa7RWFPOFew==}
 
-  '@fontsource-variable/inter@5.1.1':
-    resolution: {integrity: sha512-OpXFTmiH6tHkYijMvQTycFKBLK4X+SRV6tet1m4YOUH7SzIIlMqDja+ocDtiCA72UthBH/vF+3ZtlMr2rN/wIw==}
+  '@fontsource-variable/inter@5.2.5':
+    resolution: {integrity: sha512-TrWffUAFOnT8zroE9YmGybagoOgM/HjRqMQ8k9R0vVgXlnUh/vnpbGPAS/Caz1KIlOPnPGh6fvJbb7DHbFCncA==}
 
-  '@fontsource-variable/lora@5.1.1':
-    resolution: {integrity: sha512-renGhPji2o39E9CIdj1vAGwrV66IS7uz1AU/8DWC/zE2QdC2dA7mbaM/Q8gAfmVhow0Jyt4NPP25XrO5NQa8qg==}
+  '@fontsource-variable/lora@5.2.5':
+    resolution: {integrity: sha512-eupTrzQnDFr3i9pci0efxfT0mCjGmWJNmDyvsl9Wq11JCyNr5ZN7bTjhIT6/q9daq5CshTsowg0/BH2gERbtXQ==}
 
   '@iconify-json/logos@1.2.4':
     resolution: {integrity: sha512-XC4If5D/hbaZvUkTV8iaZuGlQCyG6CNOlaAaJaGa13V5QMYwYjgtKk3vPP8wz3wtTVNVEVk3LRx1fOJz+YnSMw==}
@@ -5673,11 +5673,11 @@ snapshots:
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
-  '@fontsource-variable/inconsolata@5.1.1': {}
+  '@fontsource-variable/inconsolata@5.2.5': {}
 
-  '@fontsource-variable/inter@5.1.1': {}
+  '@fontsource-variable/inter@5.2.5': {}
 
-  '@fontsource-variable/lora@5.1.1': {}
+  '@fontsource-variable/lora@5.2.5': {}
 
   '@iconify-json/logos@1.2.4':
     dependencies:
