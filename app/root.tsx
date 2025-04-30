@@ -1,10 +1,10 @@
 import { Main } from "@/components/main";
 import { SkipNavLink } from "@/components/skip-link";
-import { RootLayout } from "@/layouts";
+import { RootLayout as DefaultLayout } from "@/layouts";
 
+import { config } from "@/lib/constants";
 import { commitSession, getSession } from "@/lib/sessions.server";
 
-import { useEffect } from "react";
 import {
   Links,
   Meta,
@@ -13,83 +13,115 @@ import {
   ScrollRestoration,
   data,
   isRouteErrorResponse,
-  useLoaderData,
 } from "react-router";
-import { getToast } from "remix-toast";
-import { Toaster as ToastProvider, toast as notify } from "sonner";
 
 import type { Route } from "./+types/root";
 
+import "@/assets/styles/globals.css";
 //@ts-expect-error
-import "@fontsource-variable/public-sans";
-// import "./assets/styles/debug.css"; // uncomment this line to debug your styles
-import "./assets/styles/global.css";
+import "@fontsource-variable/inconsolata";
+//@ts-expect-error
+import "@fontsource-variable/inter";
+//@ts-expect-error
+import "@fontsource-variable/lora";
+import { tw } from "./helpers/tailwind";
 
 export const links: Route.LinksFunction = () =>
   [
     {
       rel: "icon",
-      type: "image/png",
-      href: "/favicon-32x32.png",
+      type: "image/svg+xml",
+      href: "/favicon.svg",
       sizes: "32x32",
     },
   ].filter(Boolean);
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const { toast, headers } = await getToast(request);
   const session = await getSession(request.headers.get("Cookie"));
-  const sidebar_state = session.get("__sidebar-session") || "maximized";
-  const t = { type: "", message: "", description: "", duration: 5000 };
+
   return data(
-    { config: { sidebar_state }, toast: toast ?? t },
-    { headers: { ...headers, "Set-Cookie": await commitSession(session) } },
+    { config: {} },
+    { headers: { "Set-Cookie": await commitSession(session) } },
   );
 }
 
 export async function action({ request }: Route.ActionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
-  const formData = await request.formData();
-  const prev_sidebar_state = formData.get("sidebar_state");
-  const new_sidebar_state =
-    prev_sidebar_state === "maximized" ? "compact" : "maximized";
-  session.set("__sidebar-session", new_sidebar_state);
+  await request.formData();
+
+  session.set("__session", false);
   return new Response(null, {
     headers: { "Set-Cookie": await commitSession(session) },
   });
 }
 
-export default function Root() {
-  const data = useLoaderData<typeof loader>();
-  const t = data.toast;
-  useEffect(() => {
-    const methods = new Map([
-      ["error", notify.error],
-      ["success", notify.success],
-      ["info", notify.info],
-      ["warning", notify.warning],
-      ["message", notify.message],
-      ["loading", notify.loading],
-    ]);
-    const toast = methods.get(t.type);
-    if (t.type && t.message && toast) toast(t.message, { duration: 4000 });
-  }, [t.message, t.type]);
-
+export default function App() {
   return <Outlet />;
 }
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
+type LayoutProps = React.PropsWithChildren<unknown>;
+
+export const Layout = ({ children }: LayoutProps) => {
   return (
-    <html lang="en" className="antialiased">
+    <html
+      lang="en"
+      data-theme={config.defaultTheme}
+      data-font={config.defaultFont}
+      className="antialiased"
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="referrer" content="origin-when-cross-origin" />
+        {/* Primary Meta Tags */}
+        <meta name="application-name" content={config.application_name} />
+        <meta name="generator" content="Vite 6.0" />
+        <meta name="keywords" content={[].join(",")} />
+        <meta name="creator" content={config.author} />
+        <meta name="publisher" content={config.author} />
+
+        <meta name="color-scheme" content="dark light" />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: light)"
+          content="#fafafa"
+        />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content="#333333"
+        />
+        <meta name="msapplication-TileColor" content="#fafafa" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="robots" content="index follow" />
+        <meta
+          name="googlebot"
+          content="max-snippet:160 max-image-preview:-1 max-video-preview:-1"
+        />
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content={config.locale} />
+        <meta property="og:site_name" content={config.application_name} />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:creator" content={`@${config.author}`} />
         <Meta />
         <Links />
       </head>
-      <body className="relative min-h-svh bg-white font-normal font-sans">
+      <body
+        className={tw([
+          "relative font-normal antialiased",
+          "bg-white text-grey-900 dark:bg-grey-900 dark:text-white",
+          "sans:font-sans mono:font-mono serif:font-serif",
+          "grid min-h-screen grid-rows-[auto_1fr_auto] supports-[min-height:100svh]:min-h-svh",
+        ])}
+      >
         <SkipNavLink />
-        <RootLayout>{children}</RootLayout>
-        <ToastProvider richColors closeButton position="top-center" />
+        <DefaultLayout>
+          {children} {/* <Main>{children}</Main> */}
+        </DefaultLayout>
         <ScrollRestoration />
         <Scripts />
       </body>

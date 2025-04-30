@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const successSchema = z.object({
+const success = z.object({
   word: z.string().default(""),
   phonetic: z.string().default(""),
   phonetics: z.array(
@@ -34,7 +34,7 @@ const successSchema = z.object({
   sourceUrls: z.array(z.string().default("")),
 });
 
-const errorSchema = z.object({
+const error = z.object({
   title: z.string().default(""),
   message: z.string().default(""),
   resolution: z.string().default(""),
@@ -50,8 +50,8 @@ export const searchSchema = z.object({
 
 export const schema = z.object({
   ok: z.boolean(),
-  data: z.nullable(successSchema),
-  error: z.nullable(errorSchema),
+  data: z.nullable(success),
+  error: z.nullable(error),
 });
 
 export type Result = z.infer<typeof schema>;

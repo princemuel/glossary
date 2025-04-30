@@ -6,13 +6,9 @@ import twConfig from "./tailwind.json";
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  content: [
-    "./src/pages/**/*.astro",
-    "./src/layouts/**/*.astro",
-    "./src/components/**/*.astro",
-  ],
+  content: ["./app/**/*.tsx"],
   future: "all",
-  experimental: { optimizeUniversalDefaults: true, matchVariant: true },
+  experimental: "all",
   theme: {
     screens: {
       "3xs": "24em", // @media (min-width: 384px) { ... }
@@ -24,18 +20,12 @@ export default {
       borderRadius: { pill: "100vmax" },
       colors: twConfig.theme.colors,
       fontFamily: {
-        sans: [
-          twConfig.theme.fontFamily.sans,
-          ...twDefaultTheme.fontFamily.sans,
-        ],
+        sans: [twConfig.theme.fontFamily.sans, ...twDefaultTheme.fontFamily.sans],
         serif: [
           twConfig.theme.fontFamily.serif,
           ...twDefaultTheme.fontFamily.serif,
         ],
-        mono: [
-          twConfig.theme.fontFamily.mono,
-          ...twDefaultTheme.fontFamily.mono,
-        ],
+        mono: [twConfig.theme.fontFamily.mono, ...twDefaultTheme.fontFamily.mono],
       },
       cursor: twConfig.theme.cursor,
       screens: {
@@ -56,10 +46,7 @@ export default {
     twPlugin(({ addVariant }) => {
       addVariant("sans", '&:where([data-font="sans"], [data-font="sans"] *)');
       addVariant("mono", '&:where([data-font="mono"], [data-font="mono"] *)');
-      addVariant(
-        "serif",
-        '&:where([data-font="serif"], [data-font="serif"] *)',
-      );
+      addVariant("serif", '&:where([data-font="serif"], [data-font="serif"] *)');
       addVariant("hocus", ["&:hover", "&:focus"]);
     }),
   ],
