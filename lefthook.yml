@@ -16,7 +16,7 @@ pre-commit:
   commands:
     js-lint:
       glob: '**/*'
-      run: corepack pnpm prettier --check {staged_files} && eslint {staged_files}
+      run: corepack pnpm prettier --check {staged_files} && corepack pnpm eslint {staged_files}
       stage_fixed: true
 
     js-fmt:
