@@ -3,42 +3,31 @@
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
-    "source.organizeImports": "explicit",
-    "source.addMissingImports": "explicit"
+    "source.addMissingImports": "explicit",
+    "source.organizeImports": "explicit"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
-  "editor.inlineSuggest.enabled": true,
-  "editor.tabSize": 2,
   "editor.wordWrap": "bounded",
-  "editor.wordWrapColumn": 88,
-  "biome.enabled": true,
-  "eslint.enable": false,
+  "editor.wordWrapColumn": 96,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "eslint.enable": true,
+  "mdx.server.enable": true,
   "json.validate.enable": true,
-  "markdown.extension.syntax.plainTheme": true,
-  "material-icon-theme.activeIconPack": "react_redux",
-  "material-icon-theme.folders.theme": "specific",
   "npm-intellisense.packageSubfoldersIntellisense": true,
+  "svelte.plugin.svelte.defaultScriptLanguage": "ts",
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/pnpm-lock.yaml": true
+  },
+  "tailwindCSS.classFunctions": ["tv", "cx", "cn", "tw"],
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.experimental.classRegex": [
-    [
-      "tv\\((([^()]*|\\([^()]*\\))*)\\)",
-      "[\"'`]([^\"'`]*).*?[\"'`]"
-    ]
+    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
-  "tailwindCSS.includeLanguages": {
-    "xslt": "html"
-  },
-  "tailwindCSS.classAttributes": [
-    "class",
-    "className",
-    "ngClass",
-    "class:list",
-    "tw"
-  ],
-  "tailwindCSS.rootFontSize": 16,
+  "tailwindCSS.classAttributes": ["class"],
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.preferences.preferTypeOnlyAutoImports": true
 }
