@@ -1,27 +1,27 @@
 import {
   createAppleSplashScreens,
   defineConfig,
-  minimal2023Preset,
-} from "@vite-pwa/assets-generator/config";
+  minimal2023Preset
+} from '@vite-pwa/assets-generator/config';
 
 export default defineConfig({
-  headLinkOptions: { preset: "2023" },
+  headLinkOptions: { preset: '2023' },
   preset: {
     ...minimal2023Preset,
     appleSplashScreens: createAppleSplashScreens(
       {
         padding: 0.3,
-        resizeOptions: { background: "white" },
-        darkResizeOptions: { background: "black" },
+        resizeOptions: { background: 'white' },
+        darkResizeOptions: { background: 'black' },
         linkMediaOptions: {
           log: true,
           addMediaScreen: true,
-          basePath: "/",
-          xhtml: true,
-        },
+          basePath: '/',
+          xhtml: true
+        }
       },
-      ['iPad Air 9.7"'],
-    ),
+      ['iPad Air 9.7"']
+    )
   },
-  images: "public/favicon.svg",
+  images: 'public/favicon.svg'
 });
