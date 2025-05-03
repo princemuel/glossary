@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@theme {
+  --text-2xs: 0.625rem;
+  --text-2xs--line-height: 0.875rem;
+
+  --font-sans:
+    'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif:
+    'Lora Variable', ui-serif, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  --font-mono:
+    'Inconsolata Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  --breakpoint-3xs: 24em; /*  (min-width: 384px) */
+  --breakpoint-2xs: 30em; /*  (min-width: 480px) */
+  --breakpoint-xs: 36em; /*  (min-width: 576px) */
+  --breakpoint-sm: 40em; /*  (min-width: 640px) */
+  --breakpoint-md: 48em; /*  (min-width: 768px) */
+  --breakpoint-lg: 64em; /*  (min-width: 1024px) */
+  --breakpoint-xl: 80em; /*  (min-width: 1280px) */
+  --breakpoint-2xl: 96em; /*  (min-width: 1536px) */
+  --breakpoint-3xl: 120em; /*  (min-width: 1920px) */
+
+  --color-grey-100: oklch(from #f4f4f4 l c h);
+  --color-grey-200: oklch(from #e9e9e9 l c h);
+  --color-grey-400: oklch(from #757575 l c h);
+  --color-grey-600: oklch(from #3a3a3a l c h);
+  --color-grey-700: oklch(from #2d2d2d l c h);
+  --color-grey-800: oklch(from #1f1f1f l c h);
+  --color-grey-900: oklch(from #050505 l c h);
+
+  --color-accent-100: oklch(from #ff5252 l c h);
+  --color-accent-200: oklch(from #a445ed l c h);
+
+  --cursor-pointer:
+    url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAI6SURBVHgBnZRBaxNBGIYnu9uNSW1NlkgMVAl4Cyg5CAUPJlYFTyaX3CohePKUn5BcBA9CfkAvAf+B4sVLBC8eChv05ClKVaQIiUKjabOO77s7E8bUBpsXnrwzu9lvvvm+2bXFccWADRw1XlpWJpNZg+8ACV4kEomNVqtliSW0Am2mUik5HA5luVxmwEe5XC4pltBZ27a38/m8pHq9HoP54KI47ZbT6fQ52H1mRjE7jnFtK5vNrjJzhSuiui5cYA2Z3YN/HwwGYcBischgH8En8BLsKZ5w8VqtdiwoJ5bneeuO49zGeBdFD4OVSqVwu77vh1nS9VgF3SoUCq4ZiJObzAgcgK8sPtVsNqWWvka1221d011wgckI9cPJ5263K7k9NkDXbZH4Xzz3DRRVLcPDycmYBTe6KPV8kUR0Hm+AM0JFvA4+6DpRnU5nNq5UKn85A5jBUOdb8ITO7CrY4dZ0F+dX/5cbmd0Fq6zXb7CPI/F6NBq9bTQa4n/V7/dpI2QmZxfZWugKhm3eNLdI6S5q1/VkozB+BjZB3Dwe6+COZVlP4Ufs7CLV63UGeg8egksieiNmspPJZA6+DZ6DX/MZVqvVMDt1JA6w8GP4NV38ebnxePwy/IEK+FMVWHMIhmr8BnWuwj2hDqwzF+xwMpnsIeCr6XQ6DoJgIKIvhhuLxaZIjm/IEZgAH/ffwX+IqIknvvU8e+fBBlb38JALDxBwrLKTWGwf/gWMzcKfJP3pXjGuBcqlyjAwH/gDZjDKatJ5fJYAAAAASUVORK5CYII='),
+    pointer;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant sans (&:where([data-font=sans], [data-font=sans] *));
+@custom-variant mono (&:where([data-font=mono], [data-font=mono] *));
+@custom-variant serif (&:where([data-font=serif], [data-font=serif] *));
+:is(a, button, label, option) {
+  @apply cursor-pointer;
+}
+:is(:disabled, [aria-disabled='true']) {
+  @apply pointer-events-none cursor-not-allowed!;
+}
