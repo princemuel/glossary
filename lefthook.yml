@@ -16,7 +16,7 @@ pre-commit:
   commands:
     js-lint:
       glob: '**/*'
-      run: corepack pnpm prettier --check {staged_files} -u --no-error-on-unmatched-pattern --config ./.prettierrc --cache && corepack pnpm eslint {staged_files}
+      run: corepack pnpm prettier --write {staged_files} -u --no-error-on-unmatched-pattern --config ./.prettierrc --cache && corepack pnpm eslint {staged_files}
       stage_fixed: true
 
     js-fmt:
