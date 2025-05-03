@@ -4,7 +4,10 @@ import '@poppanator/sveltekit-svg/dist/svg.d.ts';
 import 'unplugin-icons/types/svelte';
 declare global {
   namespace App {
-    // interface Error {}
+    interface Error {
+      title: string;
+      resolution: string;
+    }
     // interface Locals {}
     // interface PageData {}
     // interface PageState {}
