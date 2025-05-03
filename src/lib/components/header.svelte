@@ -7,7 +7,7 @@
 </script>
 
 <header class="py-12">
-  <div class="-safe flex items-center-safe justify-between">
+  <div class="flex items-center-safe justify-between">
     <Link href="/" class="flex items-center-safe">
       <IconLogo class="text-2xl" />
       <span class="sr-only">Go to home</span>
