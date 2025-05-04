@@ -35,6 +35,7 @@ export const DataSchema = z.object({
 });
 
 export type IResult = z.infer<typeof DataSchema>;
+export type IError = z.infer<typeof ErrorSchema>;
 
 export const ErrorSchema = z.object({
   title: z.string().default(''),
@@ -42,6 +43,4 @@ export const ErrorSchema = z.object({
   resolution: z.string().default('')
 });
 
-export const SearchSchema = z.object({
-  query: z.string().min(1, { message: "Whoop's, can't be empty" }).trim().default('')
-});
+export const SearchSchema = z.string().min(1, { message: "Whoop's, can't be empty" }).trim();

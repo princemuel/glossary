@@ -37,21 +37,18 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-  search: async ({ request }) => {
+  default: async ({ request }) => {
     const form = await request.formData();
-    const formResult = SearchSchema.safeParse((<string>form.get('query') ?? '').trim());
 
-    if (!formResult.success)
-      return {
-        query: '',
-        formError: "Whoops, can't be empty"
-      };
+    const formResult = SearchSchema.safeParse(form.get('query'));
 
-    const res = await fetch(new URL(formResult.data.query, DATABASE_URL));
+    if (!formResult.success) return { formError: formResult.error.issues[0].message };
+
+    const res = await fetch(new URL(formResult.data, DATABASE_URL));
     if (!res.ok) {
       const e = (await res.json()) as ResponseErr;
       return {
-        query: formResult.data.query,
+        query: formResult.data,
         error: {
           title: e.title,
           message: e.message,
@@ -66,7 +63,7 @@ export const actions = {
 
     if (!result.success)
       return {
-        query: formResult.data.query,
+        query: formResult.data,
         error: {
           title: 'Network error. Please try again.',
           message: 'Invalid data recieved',

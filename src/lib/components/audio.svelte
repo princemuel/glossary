@@ -18,8 +18,10 @@
   <audio {src} bind:duration bind:paused {...attrs}>
     <source {src} type="audio/mpeg" />
     <p>
-      Your browser doesn't support this audio file. Here is a
-      <Link href={src}>link to the audio</Link> instead.
+      Your browser doesn't support this audio file.
+      {#if src}
+        <Link href={src}>Here is a link to the audio</Link>.
+      {/if}
     </p>
   </audio>
   <button
